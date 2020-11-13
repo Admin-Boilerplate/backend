@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES6",
+        "sourceMap": true,
+        "outDir": "../dist",
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "paths": {
+            "@interfaces/*": ["interfaces/*"],
+            "@controllers/*": ["controllers/*"],
+            "@routes/*": ["routes/*"],
+            "@models/*": ["models/*"],
+            "@validators/*": ["validators/*"],
+            "@middleware/*": ["middleware/*"]
+        }
+    },
+    "exclude": [
+        "../node_modules",
+        "../dist"
+    ]
+}

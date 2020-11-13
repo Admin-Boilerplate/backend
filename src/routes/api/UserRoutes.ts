@@ -1,21 +1,11 @@
-import bcrypt from "bcryptjs";
-import config from "config";
-import {Router, Response} from "express";
-import {check, validationResult} from "express-validator/check";
-import gravatar from "gravatar";
-import HttpStatusCodes from "http-status-codes";
-import jwt from "jsonwebtoken";
+import UserController from "../../controllers/UserController";
+import BaseRoutes from "../../routes/api/base/BaseRoutes";
 
-import Payload from "../../types/Payload";
-import Request from "../../types/Request";
-import User, {IUser} from "../../models/User";
-import UserController from "../../controllers/User/UserController";
-import auth from "../../middleware/auth";
-
-const user: Router = Router();
-const controller = new UserController();
-
-user.get("/", auth, controller.findAll);
+export default class UserRoutes extends BaseRoutes {
+    constructor() {
+        super(new UserController());
+    }
+}
 
 // @route   POST api/user
 // @desc    Register user given their email and password, returns the token upon successful registration
@@ -93,4 +83,4 @@ user.get("/", auth, controller.findAll);
 //     }
 // );
 
-export default user;
+// export default UserRoutes;
