@@ -1,17 +1,7 @@
-import {Document, Model, model, Schema} from "mongoose";
+import {model, Schema} from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-
-/**
- * Interface to model the User Schema for TypeScript.
- * @param email:string
- * @param password:string
- * @param avatar:string
- */
-export interface IUser extends Document {
-    email: string;
-    password: string;
-    avatar: string;
-}
+import IPaginatable from "../interfaces/_helpers/Paginatable";
+import {IUser} from "../interfaces/models/User";
 
 
 const userSchema: Schema = new Schema({
@@ -37,6 +27,5 @@ const userSchema: Schema = new Schema({
     }
 });
 userSchema.plugin(mongoosePaginate);
-const User: Model<IUser> = model("User", userSchema);
 
-export default User;
+export const User: IPaginatable<IUser> = model<IUser, IPaginatable<IUser>>("User", userSchema);

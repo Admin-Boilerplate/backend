@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import AuthRoutes from "./api/AuthRoutes";
 import UserRoutes from "./api/UserRoutes";

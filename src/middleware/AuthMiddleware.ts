@@ -1,12 +1,11 @@
 import {NextFunction, Response} from "express";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
-
-import Payload from "../types/Payload";
-import Request from "../types/Request";
+import {IRequest} from "../interfaces/_helpers/Request";
+import {IPayload} from "../interfaces/_helpers/Payload";
 
 export default class AuthMiddleware {
-    public static autenticate (req: Request, res: Response, next: NextFunction) {
+    public static autenticate (req: IRequest, res: Response, next: NextFunction) {
         // Get token from header
         const token = req.header("x-auth-token");
 
@@ -18,8 +17,8 @@ export default class AuthMiddleware {
         }
         // Verify token
         try {
-            const payload: Payload | any = jwt.verify(token, process.env.JWT_SECRET);
-            req.userId = payload.userId;
+            const payload: IPayload = jwt.verify(token, process.env.JWT_SECRET) as IPayload;
+            req.user = payload.user;
             next();
         } catch (err) {
             res

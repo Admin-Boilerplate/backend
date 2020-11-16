@@ -1,36 +1,22 @@
 import {Request, Response} from "express";
-import * as mongoose from "mongoose";
+import { Document } from "mongoose";
+import RepositoryBase from "../../repositories/base/RepositoryBase";
+import JsonResponse from "../../helpers/JsonResponse";
 
-export default class ControllerBase<T extends mongoose.Document = any> {
+export default class ControllerBase<T extends Document = any> {
 
-    protected model: mongoose.Model<T>;
+    protected repository: RepositoryBase<T>;
 
-    constructor(model: mongoose.Model<T>) {
-        this.model = model;
+    constructor(repository: RepositoryBase) {
+        this.repository = repository;
     }
 
     public async retrieve(req: Request, res: Response) {
         try {
-            const models = await this.model.paginate();
-            if (!models) {
-                return res.status(404).send({
-                    success: false,
-                    message: 'Models not found',
-                    data: null
-                });
-            }
-
-            res.status(200).send({
-                success: true,
-                data: models
-            });
-
+            const models = await this.repository.retrieve();
+            return res.json(models);
         } catch (err) {
-            res.status(500).send({
-                success: false,
-                message: err.toString(),
-                data: null
-            });
+            res.status(500).json(new JsonResponse().exception(err));
         }
     }
 }

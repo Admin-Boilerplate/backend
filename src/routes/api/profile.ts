@@ -2,17 +2,15 @@ import {Router, Response} from "express";
 import {check, validationResult} from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
 
-import auth from "../../middleware/auth";
-import Profile, {IProfile} from "../../models/Profile";
-import Request from "../../types/Request";
-import User, {IUser} from "../../models/User";
+import AuthMiddleware from "../../middleware/AuthMiddleware";
+import {IRequest} from "../../interfaces/_helpers/Request";
 
 const router: Router = Router();
-
+/*
 // @route   GET api/profile/me
 // @desc    Get current user's profile
 // @access  Private
-router.get("/me", auth, async (req: Request, res: Response) => {
+router.get("/me", AuthMiddleware.autenticate, async (req: IRequest, res: Response) => {
     try {
         const profile: IProfile = await Profile.findOne({
             user: req.userId,
@@ -40,7 +38,7 @@ router.get("/me", auth, async (req: Request, res: Response) => {
 router.post(
     "/",
     [
-        auth,
+        AuthMiddleware.autenticate,
         check("firstName", "First Name is required").not().isEmpty(),
         check("lastName", "Last Name is required").not().isEmpty(),
         check("username", "Username is required").not().isEmpty(),
@@ -144,7 +142,7 @@ router.get("/user/:userId", async (req: Request, res: Response) => {
 // @route   DELETE api/profile
 // @desc    Delete profile and user
 // @access  Private
-router.delete("/", auth, async (req: Request, res: Response) => {
+router.delete("/", AuthMiddleware.autenticate, async (req: Request, res: Response) => {
     try {
         // Remove profile
         await Profile.findOneAndRemove({user: req.userId});
@@ -157,5 +155,5 @@ router.delete("/", auth, async (req: Request, res: Response) => {
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
     }
 });
-
+*/
 export default router;

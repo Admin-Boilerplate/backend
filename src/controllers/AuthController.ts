@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import User, { IUser } from "../models/User";
 import bcrypt from "bcryptjs";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
+import {User} from "../models/User";
+import {IUser} from "../interfaces/models/User";
 
 export default class AuthController {
 
