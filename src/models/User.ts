@@ -14,9 +14,7 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    avatar: {
-        type: String
-    }
+    roles: [String]
 }, {
     timestamps: true,
     toJSON: {

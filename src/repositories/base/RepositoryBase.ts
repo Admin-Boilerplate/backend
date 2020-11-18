@@ -13,4 +13,16 @@ export default class RepositoryBase<T extends Document = any> {
     public async retrieve() {
         return new JsonResponse().ok(await this.model.paginate());
     }
+
+    public async findById(id: string) {
+        return new JsonResponse().ok(await this.model.findById(id));
+    }
+
+    public async create(item: Partial<T>) {
+        return new JsonResponse().ok(await new this.model(item).save());
+    }
+
+    public async update(id: string, item: Partial<T>) {
+        return new JsonResponse().ok(await this.model.findByIdAndUpdate(id, item, {new: true}));
+    }
 }

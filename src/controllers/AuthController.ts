@@ -66,7 +66,8 @@ export default class AuthController {
 
             const payload: any = {
                 _id: user._id,
-                email: user.email
+                email: user.email,
+                roles: user.roles
             };
 
             jwt.sign(
@@ -75,7 +76,7 @@ export default class AuthController {
                 {expiresIn: process.env.JWT_EXPIRATION},
                 (err, token) => {
                     if (err) throw err;
-                    res.json({token});
+                    res.status(HttpStatusCodes.OK).json({token});
                 }
             );
         } catch (err) {

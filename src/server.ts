@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import express from "express";
 
 import connectDB from "../config/database";
-import Routes from "./routes/Routes";
+import {BaseRoutes} from "./routes/api/_BaseRoutes";
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(helmet());
 app.set("port", process.env.PORT || 5000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use("/api", Routes);
+app.use("/api", new BaseRoutes().makeRoutes());
 
 const port = app.get("port");
 const server = app.listen(port, () =>
