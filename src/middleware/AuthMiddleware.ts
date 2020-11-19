@@ -2,7 +2,6 @@ import {NextFunction, Response} from "express";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
 import {IRequest} from "../interfaces/_helpers/Request";
-import {IPayload} from "../interfaces/_helpers/Payload";
 import {IUser} from "../interfaces/models/User";
 
 export default class AuthMiddleware {
@@ -14,7 +13,7 @@ export default class AuthMiddleware {
         if (!token) {
             return res
                 .status(HttpStatusCodes.UNAUTHORIZED)
-                .json({msg: "No token, authorization denied"});
+                .json({msg: req.__("No token, authorization denied")});
         }
         // Verify token
         try {
@@ -38,13 +37,13 @@ export default class AuthMiddleware {
             if (!user) {
                 return res
                     .status(HttpStatusCodes.UNAUTHORIZED)
-                    .json({msg: "No user, authorization denied"});
+                    .json({msg: req.__("No user, authorization denied")});
             }
 
             if (!user?.roles?.length) {
                 return res
                     .status(HttpStatusCodes.UNAUTHORIZED)
-                    .json({msg: "User has no roles, authorization denied"});
+                    .json({msg: req.__("User has no roles, authorization denied")});
             }
 
 
@@ -65,7 +64,7 @@ export default class AuthMiddleware {
 
             return res
                 .status(HttpStatusCodes.UNAUTHORIZED)
-                .json({msg: "No right role, authorization denied"});
+                .json({msg: req.__("No right role, authorization denied")});
         }
     }
 }
