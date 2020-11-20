@@ -34,12 +34,7 @@ export default class JsonResponse<T = any> implements IResponse {
      * The response data that can be assigned to any key.
      * These data can optionally have a type
      */
-    [key: string]: T|any;
-
-    /**
-     * The "key" that shows where our data - the main content of the response - is placed
-     */
-    public key: string = "data";
+    public data : T|any;
 
     /**
      * A static getter for a general purpose error
@@ -80,7 +75,6 @@ export default class JsonResponse<T = any> implements IResponse {
      */
     public check(errors?: IError[]|null, data?: T|any, key: string = "data", details?: any) {
         this.success = !(errors && errors.length > 0);
-        this.key = key;
         if (errors) {
             this.errors = errors;
         }
@@ -107,7 +101,7 @@ export default class JsonResponse<T = any> implements IResponse {
      * The main method of extracting the main response content (data)
      */
     public get(): T {
-        return this[this.key];
+        return this.data;
     }
 
     /**
@@ -137,10 +131,9 @@ export default class JsonResponse<T = any> implements IResponse {
      * @param key
      * @param details
      */
-    public ok(data: T, key: string = "data", details?: any) {
+    public ok(data: T, details?: any) {
         this.success = true;
-        this[key] = data;
-        this.key = key;
+        this.data = data;
         if (details) {
             this.details = details;
         }

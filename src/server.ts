@@ -27,7 +27,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(i18n.init);
 app.all("*", (req, res, next) => {
-    req.setLocale(req.header("Accept-Language"));
+    if (req.header?.("Accept-Language")) {
+        req.setLocale?.(req.header?.("Accept-Language"));
+    }
     next();
 });
 app.use("/api", new BaseRoutes().makeRoutes());

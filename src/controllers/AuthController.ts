@@ -4,6 +4,7 @@ import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
 import {User} from "../models/User";
 import {IUser} from "../interfaces/models/User";
+import JsonResponse from "../helpers/JsonResponse";
 
 export default class AuthController {
 
@@ -69,16 +70,24 @@ export default class AuthController {
                 email: user.email,
                 roles: user.roles
             };
-
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET,
-                {expiresIn: process.env.JWT_EXPIRATION},
+                {expiresIn: "10d"},
                 (err, token) => {
                     if (err) throw err;
                     res.status(HttpStatusCodes.OK).json({token});
                 }
             );
+        } catch (err) {
+            console.error(err.message);
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+        }
+    }
+
+    public async logout(req: Request, res: Response) {
+        try {
+            res.status(HttpStatusCodes.OK).json(new JsonResponse().ok(true));
         } catch (err) {
             console.error(err.message);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

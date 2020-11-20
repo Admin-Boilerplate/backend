@@ -7,7 +7,8 @@ import {IUser} from "../interfaces/models/User";
 export default class AuthMiddleware {
     public static autenticate (req: IRequest, res: Response, next: NextFunction) {
         // Get token from header
-        const token = req.header("Authorization").replace("Bearer ", "");
+        const authToken = req.header("Authorization");
+        const token = (authToken || "")?.replace("Bearer ", "");
 
         // Check if no token
         if (!token) {

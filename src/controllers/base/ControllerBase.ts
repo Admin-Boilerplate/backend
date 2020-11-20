@@ -12,9 +12,18 @@ export default class ControllerBase<T extends Document = any> {
         this._repository = repository;
     }
 
-    public async retrieve(req: Request, res: Response) {
+    public async paginate(req: Request, res: Response) {
         try {
-            const models = await this.repo().retrieve(req.query);
+            const models = await this.repo().paginate(req.query);
+            return res.status(HttpStatusCodes.OK).json(models);
+        } catch (err) {
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json(new JsonResponse().exception(err));
+        }
+    }
+
+    public async all(req: Request, res: Response) {
+        try {
+            const models = await this.repo().all(req.query);
             return res.status(HttpStatusCodes.OK).json(models);
         } catch (err) {
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json(new JsonResponse().exception(err));

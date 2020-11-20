@@ -13,8 +13,12 @@ export default class RepositoryBase<T extends Document = any> {
         this.model = model;
     }
 
-    public async retrieve(query: any = {}) {
+    public async paginate(query: any = {}) {
         return new JsonResponse().ok(await this.model.paginate({}, query));
+    }
+
+    public async all(query: any = {}) {
+        return new JsonResponse().ok(await this.model.find(query));
     }
 
     public async findById(id: string, query: any = {}) {

@@ -9,8 +9,13 @@ export default class RouteBase {
     protected baseRoutes: IRoute[] = [
         {
             verb: "get",
+            path: "/",
+            method: "all"
+        },
+        {
+            verb: "get",
             path: "/paginate",
-            method: "retrieve"
+            method: "paginate"
         },
         {
             path: "/",
